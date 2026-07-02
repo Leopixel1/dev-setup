@@ -42,3 +42,5 @@ Write-Host "IMPORTANT: Please restart your terminal to ensure all paths are load
 Write-Host "Once restarted, you can install the latest LTS version of Node.js by running:"
 Write-Host "  nvm install lts"
 Write-Host "  nvm use lts"
+
+exit 0
