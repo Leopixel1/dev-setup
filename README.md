@@ -1,6 +1,6 @@
 # Dev Setup
 
-A personal development environment setup script for new PCs (macOS and Ubuntu/Debian).
+A personal development environment setup script for new PCs (Windows, macOS, and Ubuntu/Debian).
 This script automatically installs essential tools and runtimes so you can start developing right away!
 
 ## Features
@@ -17,14 +17,21 @@ This script automatically installs essential tools and runtimes so you can start
    cd dev-setup
    ```
 
-2. Make sure the script is executable:
+2. Make sure the script is executable (macOS/Linux):
    ```bash
    chmod +x setup.sh
    ```
 
 3. Run the setup script:
+
+   **For macOS/Linux or Git Bash (Windows):**
    ```bash
    ./setup.sh
    ```
 
-4. Once it finishes, restart your terminal or `source ~/.bashrc` (or `~/.zshrc`) to ensure all paths are loaded correctly.
+   **For native Windows (PowerShell):**
+   ```powershell
+   .\setup.ps1
+   ```
+
+4. Once it finishes, restart your terminal or `source ~/.bashrc` (or `~/.zshrc`) to ensure all paths are loaded correctly. For Windows, you may need to run `nvm install lts` and `nvm use lts` after restarting your terminal.

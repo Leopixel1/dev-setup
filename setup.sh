@@ -17,6 +17,8 @@ detect_os() {
         fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         OS="macos"
+    elif [[ "$OSTYPE" == "msys"* ]] || [[ "$OSTYPE" == "cygwin"* ]] || [[ "$OSTYPE" == "win32"* ]]; then
+        OS="windows"
     else
         echo "Unsupported OS: $OSTYPE"
         exit 1
@@ -60,6 +62,32 @@ elif [ "$OS" == "macos" ]; then
 
     echo "Installing Python 3..."
     brew install python
+
+elif [ "$OS" == "windows" ]; then
+    echo "Detected Windows."
+
+    if ! command -v winget &> /dev/null; then
+        echo "winget not found. Please install App Installer from the Microsoft Store."
+        exit 1
+    fi
+
+    echo "Installing core utilities..."
+    winget install --id Git.Git -e --source winget
+    # Windows already has curl, but we install wget via winget
+    winget install --id JernejSimoncic.Wget -e --source winget
+
+    echo "Installing Python 3..."
+    winget install --id Python.Python.3.12 -e --source winget
+
+    echo "Installing NVM for Windows..."
+    winget install --id CoreyButler.NVMforWindows -e --source winget
+fi
+
+if [ "$OS" == "windows" ]; then
+    echo "Development environment setup complete!"
+    echo "IMPORTANT: Please restart your terminal to ensure all paths are loaded correctly."
+    echo "For Windows, NVM is installed via nvm-windows. Run 'nvm install lts' after restarting."
+    exit 0
 fi
 
 # Install NVM and Node.js
