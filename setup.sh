@@ -31,13 +31,13 @@ if [ "$OS" == "ubuntu" ]; then
     echo "Detected Ubuntu/Debian."
 
     echo "Updating package lists..."
-    sudo apt-get update -y
+    sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 
     echo "Installing core utilities..."
-    sudo apt-get install -y git curl wget build-essential
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y git curl wget build-essential
 
     echo "Installing Python 3 and pip..."
-    sudo apt-get install -y python3 python3-pip python3-venv
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip python3-venv
 
 elif [ "$OS" == "macos" ]; then
     echo "Detected macOS."
@@ -72,15 +72,32 @@ elif [ "$OS" == "windows" ]; then
     fi
 
     echo "Installing core utilities..."
-    winget install --id Git.Git -e --source winget
+    if ! command -v git &> /dev/null; then
+        winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements
+    else
+        echo "Git is already installed."
+    fi
+
     # Windows already has curl, but we install wget via winget
-    winget install --id JernejSimoncic.Wget -e --source winget
+    if ! command -v wget &> /dev/null; then
+        winget install --id JernejSimoncic.Wget -e --source winget --accept-source-agreements --accept-package-agreements
+    else
+        echo "Wget is already installed."
+    fi
 
     echo "Installing Python 3..."
-    winget install --id Python.Python.3.12 -e --source winget
+    if ! command -v python3 &> /dev/null && ! command -v python &> /dev/null; then
+        winget install --id Python.Python.3.12 -e --source winget --accept-source-agreements --accept-package-agreements
+    else
+        echo "Python is already installed."
+    fi
 
     echo "Installing NVM for Windows..."
-    winget install --id CoreyButler.NVMforWindows -e --source winget
+    if ! command -v nvm &> /dev/null; then
+        winget install --id CoreyButler.NVMforWindows -e --source winget --accept-source-agreements --accept-package-agreements
+    else
+        echo "NVM is already installed."
+    fi
 fi
 
 if [ "$OS" == "windows" ]; then

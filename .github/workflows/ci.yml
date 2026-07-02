@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup script
+        run: |
+          chmod +x setup.sh
+          ./setup.sh
+
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup script
+        run: |
+          chmod +x setup.sh
+          ./setup.sh
+
+  test-windows-bash:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup script (Git Bash)
+        shell: bash
+        run: ./setup.sh
+
+  test-windows-ps:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup script (PowerShell)
+        shell: powershell
+        run: ./setup.ps1
