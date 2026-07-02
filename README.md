@@ -35,3 +35,34 @@ This script automatically installs essential tools and runtimes so you can start
    ```
 
 4. Once it finishes, restart your terminal or `source ~/.bashrc` (or `~/.zshrc`) to ensure all paths are loaded correctly. For Windows, you may need to run `nvm install lts` and `nvm use lts` after restarting your terminal.
+
+## GitHub Actions & Self-Hosted Runners
+
+This project can be used to automatically provision GitHub Actions self-hosted runners or as part of a CI pipeline to ensure a consistent environment.
+
+### Auto Deployment / Provisioning
+
+To use these scripts in a GitHub Actions workflow (e.g., for a self-hosted runner), you can add a step to your workflow:
+
+```yaml
+jobs:
+  provision:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Setup Script
+        run: |
+          chmod +x setup.sh
+          ./setup.sh
+```
+
+### Continuous Integration
+
+The scripts are automatically tested on every push to the `main` branch across Ubuntu, macOS, and Windows. Check the `.github/workflows/ci.yml` file for the exact implementation.
+
+### Manual Setup for Runners
+
+If you are setting up a new machine as a self-hosted runner:
+1. Follow the standard installation steps above.
+2. Register the runner on GitHub.
+3. The scripts ensure that `git`, `node`, `npm`, and `python` are available for your CI jobs.

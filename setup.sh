@@ -31,13 +31,13 @@ if [ "$OS" == "ubuntu" ]; then
     echo "Detected Ubuntu/Debian."
 
     echo "Updating package lists..."
-    sudo apt-get update -y
+    sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 
     echo "Installing core utilities..."
-    sudo apt-get install -y git curl wget build-essential
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y git curl wget build-essential
 
     echo "Installing Python 3 and pip..."
-    sudo apt-get install -y python3 python3-pip python3-venv
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip python3-venv
 
 elif [ "$OS" == "macos" ]; then
     echo "Detected macOS."
@@ -72,15 +72,15 @@ elif [ "$OS" == "windows" ]; then
     fi
 
     echo "Installing core utilities..."
-    winget install --id Git.Git -e --source winget
+    winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements
     # Windows already has curl, but we install wget via winget
-    winget install --id JernejSimoncic.Wget -e --source winget
+    winget install --id JernejSimoncic.Wget -e --source winget --accept-source-agreements --accept-package-agreements
 
     echo "Installing Python 3..."
-    winget install --id Python.Python.3.12 -e --source winget
+    winget install --id Python.Python.3.12 -e --source winget --accept-source-agreements --accept-package-agreements
 
     echo "Installing NVM for Windows..."
-    winget install --id CoreyButler.NVMforWindows -e --source winget
+    winget install --id CoreyButler.NVMforWindows -e --source winget --accept-source-agreements --accept-package-agreements
 fi
 
 if [ "$OS" == "windows" ]; then
